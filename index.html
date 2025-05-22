@@ -34,7 +34,18 @@
       margin: 0;
       padding-left: 20px;
     }
+    .download-btn {
+      background-color: #2e0498;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 30px;
+      font-size: 16px;
+    }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 
@@ -53,8 +64,8 @@
     <h2>Career Goals</h2>
     <p>
       My professional goals are centered around using my skills and knowledge to make a positive impact on society through the creation and advancement of technology.<br>
-       I aim to contribute to the ongoing evolution of technology and make meaningful contributions through my work as a computer scientist.<br>
-        My main objective is to develop innovative solutions to complex problems using computer science principles, collaborating with others, and continuously improving my technical abilities.
+      I aim to contribute to the ongoing evolution of technology and make meaningful contributions through my work as a computer scientist.<br>
+      My main objective is to develop innovative solutions to complex problems using computer science principles, collaborating with others, and continuously improving my technical abilities.
     </p>
   </div>
 
@@ -188,6 +199,35 @@
       </tr>
     </table>
   </div>
+
+  <button onclick="downloadPDF()" class="download-btn">Download Resume as PDF</button>
+
+  <script>
+    async function downloadPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF('p', 'pt', 'a4');
+
+      // Clone the body
+      const content = document.body.cloneNode(true);
+
+      // Hide the download button in the PDF
+      const button = content.querySelector('.download-btn');
+      if (button) button.style.display = 'none';
+
+      // Create a container for styling
+      const container = document.createElement('div');
+      container.appendChild(content);
+      container.style.padding = '20px';
+
+      await doc.html(container, {
+        callback: function (doc) {
+          doc.save('Martin_Mwai_James_Resume.pdf');
+        },
+        x: 10,
+        y: 10
+      });
+    }
+  </script>
 
 </body>
 </html>
